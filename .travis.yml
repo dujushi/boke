@@ -1,55 +1,41 @@
 dist: trusty
 sudo: required
-
 addons:
- ssh_known_hosts:
-   - github.com
-   - git.coding.net
- apt:
-   packages:
-     - nasm
-
+  ssh_known_hosts:
+  - github.com
+  - git.coding.net
+  apt:
+    packages:
+    - nasm
 env:
- global:
-   - TZ=Asia/Tokyo
-
+  global:
+  - TZ=Asia/Tokyo
+  - secure: j7avPz3p4r0skPMtHLPALAxZboYiLQkIFGFnmy82xJtgpmy/3D9167P+JjWXNfzqAqpeaIg5B77UdXt4aQ6iKSAaKMmNh7f3sGFm7lY1e+rQwWlD3Qk9ffcRaVedgwEU/ZsRL+2JoRmTvXzeorsUmMj+o9IL5ClIfLhKynxwR/jc2f+GlJj9+JYobr7JCRV46F0qdTkqkU/ykqQVlNwsr8bwlPVphiWnDWt86Lx+vK7w0YyOoAnxNVHeXvB4fAAmUq4zeqwVEoCBvSKlT8FBR1jJjRLEaWQCXaC9q5xqvUNpal859Md+hVRpBIfD8zmm9MxIMmn9O2OruyBqlkd0umEXKV/M7bREBjYFRSgswylsqebYO6NDaVldCt3YhS7hKf0tMqfza4v58RhJLr+DxGbC2+3Kqs5RfU2lCkYzN9ryHqVFtmAf/h+P6YvDeNXS60icJgCpRx1jDS6KtecXPIdVi7CW3mW2esH9pUJwo8vqxSfanUXs8Dz+fUd11c1FCJunX/lMqEozw5Jq/Sij/wvtMi7wY5iOGS3JUYYu1P/Xr/I1+RYagnBDTzPe5KeW24tFDHKWSp2IykEd2zy+G3MVB8QLA7/PYI6Z3TfORBjC1qZM2xcrTmsAhc/BnWg9Ccbdw0JIq29iliZt/Env3ojkG0R+3nto5ZmzJGB+z8o=
 language: node_js
 node_js: node
-
 branches:
- only:
-   - master
-
+  only:
+  - master
 git:
- depth: false
- submodules: false
-
+  depth: false
+  submodules: false
 cache:
- apt: true
- directories:
-   - node_modules
-
+  apt: true
+  directories:
+  - node_modules
 before_install:
- # Git Config
- - git config --global user.name "William Guo"
- - git config --global user.email "dujushi@gmail.com"
-
- # Restore last modified time
- - "git ls-files -z | while read -d '' path; do touch -d \"$(git log -1 --format=\"@%ct\" \"$path\")\" \"$path\"; done"
-
- # Deploy history
- - git clone --branch=master --single-branch https://github.com/dujushi/boke .deploy_git
-
- # SSH Setup
- - openssl aes-256-cbc -K $encrypted_693585a97b8c_key -iv $encrypted_693585a97b8c_iv -in deploy_key.enc -out deploy_key -d
- - eval "$(ssh-agent -s)"
- - chmod 600 ./deploy_key
- - ssh-add ./deploy_key
-
+- git config --global user.name "William Guo"
+- git config --global user.email "dujushi@gmail.com"
+- git ls-files -z | while read -d '' path; do touch -d "$(git log -1 --format="@%ct"
+  "$path")" "$path"; done
+- git clone --branch=master --single-branch https://github.com/dujushi/boke .deploy_git
+- openssl aes-256-cbc -K $encrypted_693585a97b8c_key -iv $encrypted_693585a97b8c_iv
+  -in deploy_key.enc -out deploy_key -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./deploy_key
+- ssh-add ./deploy_key
 install: npm install
-
-before_script:
-
+before_script: 
 script:
- - hexo clean
- - hexo g -d
+- hexo clean
+- hexo g -d
