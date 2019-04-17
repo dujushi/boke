@@ -31,15 +31,11 @@ cache:
 
 before_install:
  # Git Config
- - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
  - git config --global user.name "William Guo"
  - git config --global user.email "dujushi@gmail.com"
 
  # Restore last modified time
  - "git ls-files -z | while read -d '' path; do touch -d \"$(git log -1 --format=\"@%ct\" \"$path\")\" \"$path\"; done"
-
- # Submodules
- - git submodule update --recursive --remote --init
 
  # Deploy history
  - git clone --branch=master --single-branch https://github.com/dujushi/boke .deploy_git
